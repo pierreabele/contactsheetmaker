@@ -1,4 +1,4 @@
-from PIL import Image, ImageFont, ImageDraw, ImageOps
+from PIL import Image, ImageFont, ImageDraw, ImageOps, ImageTk
 from os import listdir
 from os.path import isfile, join
 from datetime import datetime
@@ -9,6 +9,10 @@ from tkinter.filedialog import askdirectory
 
 root = tk.Tk()
 root.title("Contact Sheet Maker")
+
+# configure the grid
+root.columnconfigure(0, weight=1)
+root.columnconfigure(1, weight=3)
 
 window_width = 800
 window_height = 600
@@ -107,7 +111,7 @@ center_y = int(screen_height/2 - window_height / 2)
 # set the position of the window to the center of the screen
 root.geometry(f'{window_width}x{window_height}+{center_x}+{center_y}')
 root.resizable(False, False)
-root.iconbitmap('./csmicon2.ico')
+root.iconbitmap('./csmicon3.ico')
 
 pathtext=tk.StringVar()
 photographer = tk.StringVar()
@@ -115,32 +119,40 @@ camera = tk.StringVar()
 film_stock = tk.StringVar()
 note = tk.StringVar()
 
+ipadding = {'ipadx': 2, 'ipady': 2}
+padding = {'padx': 6, 'pady': 3}
+
 pathButton = ttk.Button(root, text="Select Folder", command=getpath)
-pathButton.pack()
+pathButton.grid(**padding, **ipadding, row=0, column=0)
 pathLabel = ttk.Label(root, textvariable=pathtext)
-pathLabel.pack()
+pathLabel.grid(**padding, **ipadding, row=0, column=1)
 
 photographer_label = ttk.Label(root, text="Name of the photographer:")
-photographer_label.pack(fill='x', expand=True)
+photographer_label.grid(**padding, **ipadding, row=1, column=0)
 photographer_entry = ttk.Entry(root, textvariable=photographer)
-photographer_entry.pack(fill='x', expand=True)
+photographer_entry.grid(**padding, **ipadding, row=1, column=1, sticky='we')
 
 camera_label = ttk.Label(root, text="Name of the camera model:")
-camera_label.pack(fill='x', expand=True)
+camera_label.grid(**padding, **ipadding, row=2, column=0)
 camera_entry = ttk.Entry(root, textvariable=camera)
-camera_entry.pack(fill='x', expand=True)
+camera_entry.grid(**padding, **ipadding, row=2, column=1, sticky='we')
 
 film_stock_label = ttk.Label(root, text="Film stock:")
-film_stock_label.pack(fill='x', expand=True)
+film_stock_label.grid(**padding, **ipadding, row=3, column=0)
 film_stock_entry = ttk.Entry(root, textvariable=film_stock)
-film_stock_entry.pack(fill='x', expand=True)
+film_stock_entry.grid(**padding, **ipadding, row=3, column=1, sticky='we')
 
 note_label = ttk.Label(root, text="Add a note, like time and place:")
-note_label.pack(fill='x', expand=True)
+note_label.grid(**padding, **ipadding, row=4, column=0)
 note_entry = ttk.Entry(root, textvariable=note)
-note_entry.pack(fill='x', expand=True)
+note_entry.grid(**padding, **ipadding, row=4, column=1, sticky='we')
 
 mainButton = ttk.Button(root, text="Make a Contact Sheet!", command=(lambda: make_contactsheet(pathtext.get())))
-mainButton.pack()
+mainButton.grid(**padding, **ipadding, row=5, column=0, columnspan=2, sticky='we')
+
+preview_canvas = ImageTk.PhotoImage(Image.new("RGB", (400,200), (0, 0, 0)))
+preview_canvas_label = ttk.Label(root, image=preview_canvas)
+preview_canvas_label.grid(**padding, **ipadding, row=6, column=0, columnspan=2)
+
 
 root.mainloop()
