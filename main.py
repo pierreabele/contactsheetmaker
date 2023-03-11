@@ -6,11 +6,11 @@ from datetime import datetime
 import tkinter as tk
 from tkinter import ttk
 from tkinter.filedialog import askdirectory
-import sv_ttk
+#import sv_ttk
 
 root = tk.Tk()
 root.title("Contact Sheet Maker")
-sv_ttk.set_theme("dark")
+#sv_ttk.set_theme("dark")
 
 # configure the grid
 root.columnconfigure(0, weight=1)
@@ -24,7 +24,7 @@ film_formats = ("35mm", "6x4.5", "6x6", "6x7")
 format_sizes = {"35mm": (360, 240), "6x6": (560, 560), "6x4.5": (415, 560), "6x7": (690, 560)} # in tenths of millimeters
 
 main_res = (3543, 2362) # resolution of 30cm x 20cm photographic paper at 300 DPI
-preview_res = (750,500)
+preview_res = (900,600)
 
 spacing_x = 30
 spacing_y = 75
@@ -33,11 +33,15 @@ default_outname = "contactsheet"
 
 def getpath():
     path = askdirectory(title='Select Folder')  # shows dialog box and return the path
-    path = path + "/"
+    if path.endswith("/"):
+        pass
+    else:
+        path = path + "/"
     pathtext.set(path)
 
 
 def make_contactsheet(path, fformat="35mm", preview=False):
+
     filenames = [f for f in sorted(listdir(path)) if isfile(join(path, f))]
 
     a = format_sizes[fformat][0]
@@ -91,7 +95,6 @@ def make_contactsheet(path, fformat="35mm", preview=False):
     fontb = ImageFont.truetype("cour.ttf", 40)
     draw = ImageDraw.Draw(canvas)
 
-    assert len(filenames) <= shape[0] * shape[1]
     pos_list = [
         (offset_x + (i % shape[0]) * (lat_res + spacing_x), offset_y + i // shape[0] * (b * lat_res // a + spacing_y))
         for i in range(shape[0] * shape[1])]
@@ -99,6 +102,16 @@ def make_contactsheet(path, fformat="35mm", preview=False):
     count = 0
 
     for filename in filenames:
+
+        if filename.endswith(".jpg") or filename.endswith(".JPG"):
+            pass
+        else:
+            print("Found file", filename, ", which is not a JPEG file.")
+            continue
+
+        if default_outname in filename:
+            continue
+
         raw_image = Image.open(path + filename)
         image = rotate_crop_resize(raw_image)
         if verbose:
@@ -108,6 +121,7 @@ def make_contactsheet(path, fformat="35mm", preview=False):
                   font=fontb)
         canvas.paste(image, box=pos)
         count += 1
+        assert count <= shape[0] * shape[1]
 
     now = datetime.now()
     year = now.strftime("%Y")
@@ -119,13 +133,8 @@ def make_contactsheet(path, fformat="35mm", preview=False):
 
     draw.text((offset_x, 45), text=text, fill='white', font=fonta)
 
-    if default_outname + ".jpg" in filenames:
-        print("There already exists a contact sheet.")
-        outname = default_outname
-    else:
-        now = datetime.now()
-        dt_string = now.strftime("%d_%m_%Y_%H_%M_%S")
-        outname = default_outname + dt_string
+    dt_string = now.strftime("%d_%m_%Y_%H_%M_%S")
+    outname = default_outname + dt_string
 
     if not preview:
         canvas.save(path + outname + ".jpg", format='JPEG', subsampling=0, quality=100)
@@ -145,7 +154,7 @@ screen_width = root.winfo_screenwidth()
 screen_height = root.winfo_screenheight()
 
 window_width = 1 * screen_width // 2
-window_height = 3 * screen_height // 4
+window_height = 4 * screen_height // 5
 
 # find the center point
 center_x = int(screen_width/2 - window_width / 2)
