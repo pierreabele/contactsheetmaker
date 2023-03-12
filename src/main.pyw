@@ -9,7 +9,7 @@ from tkinter.filedialog import askdirectory
 import sv_ttk
 
 root = tk.Tk()
-root.title("Contact Sheet Maker")
+root.title("ContactSheetMaker")
 sv_ttk.set_theme("dark")
 
 # configure the grid
