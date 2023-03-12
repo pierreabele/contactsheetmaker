@@ -11,7 +11,7 @@ ContactSheetMaker currently supports the following film formats:
 It generates an output file with dimensions 3543 by 2362, which represents a sheet of 20cm x 30cm photographic paper at 300 DPI.
 ## Installation
 ### Windows
-A Windows executable is provided with as a [release](https://github.com/pierreabele/contactsheetmaker/releases/new).
+A Windows executable is provided with as a [release](https://github.com/pierreabele/contactsheetmaker/releases).
 ### Linux
 TODO
 ### MacOS
