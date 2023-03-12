@@ -22,5 +22,5 @@ If you want to build the program yourself, you will need a Python installation, 
 as well as ``pyinstaller``. Then run the following command within the project directory:
 
 ```
-pyinstaller main.pyw --onefile --collect-data sv_ttk --icon csmicon4.ico --name ContactSheetMaker
+pyinstaller ./src/main.pyw --onefile --collect-data sv_ttk --icon ./ico/csmicon4.ico --name ContactSheetMaker
 ```
