@@ -34,5 +34,5 @@ python3 ./src/main.pyw
 Or, if you want to produce a standalone binary, run 
 
 ```
-pyinstaller ./src/main.pyw --onefile --collect-data sv_ttk --icon ./ico/csmicon4.ico --name ContactSheetMaker
+python -m PyInstaller ./src/main.pyw --onefile --collect-data sv_ttk --icon ./ico/csmicon4.ico --name ContactSheetMaker
 ```
