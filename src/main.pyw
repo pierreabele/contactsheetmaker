@@ -1,5 +1,5 @@
 from PIL import Image, ImageFont, ImageDraw, ImageOps, ImageTk
-from os import listdir
+import os
 from os.path import isfile, join
 from datetime import datetime
 
@@ -42,7 +42,7 @@ def getpath():
 
 def make_contactsheet(path, fformat="35mm", preview=False):
 
-    filenames = [f for f in sorted(listdir(path)) if isfile(join(path, f))]
+    filenames = [f for f in sorted(os.listdir(path)) if isfile(join(path, f))]
 
     a = format_sizes[fformat][0]
     b = format_sizes[fformat][1]
@@ -164,8 +164,10 @@ center_y = int(screen_height/2 - window_height / 2)
 root.geometry(f'{window_width}x{window_height}+{center_x}+{center_y}')
 root.resizable(True, True)
 
+default_photographer_name=os.environ['USERNAME']
+
 pathtext=tk.StringVar()
-photographer = tk.StringVar()
+photographer = tk.StringVar(value=default_photographer_name)
 camera = tk.StringVar()
 film_stock = tk.StringVar()
 note = tk.StringVar()

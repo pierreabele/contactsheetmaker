@@ -9,20 +9,29 @@ ContactSheetMaker currently supports the following film formats:
 - 6x7
 
 It generates an output file with dimensions 3543 by 2362, which represents a sheet of 20cm x 30cm photographic paper at 300 DPI.
-## Installation
-### Windows
-A Windows executable is provided with as a [release](https://github.com/pierreabele/contactsheetmaker/releases/new).
-### Linux
-TODO
-### MacOS
-TODO
-### Building from source
-If you want to build the program yourself, you will need a Python installation, in which the following modules have to be installed:
-- pillow
-- tkinter
-- sv_ttk ([Sun Valley Theme for tkinter](https://github.com/rdbende/Sun-Valley-ttk-theme) by rdbende)
 
-as well as ``pyinstaller``. Then run the following command within the project directory:
+## Installation
+
+You need a Python installation, in which the following Python packages have to be installed:
+
+- ``pillow``
+- ``tkinter``
+- ``sv_ttk`` ([Sun Valley Theme for tkinter](https://github.com/rdbende/Sun-Valley-ttk-theme) by rdbende)
+- ``pyinstaller`` (optional)
+
+Then run the following command within the project directory:
+
+Windows:
+```
+python .\src\main.pyw
+```
+
+Linux/MacOS (not tested):
+```
+python3 ./src/main.pyw
+```
+
+Or, if you want to produce a standalone binary, run 
 
 ```
 pyinstaller ./src/main.pyw --onefile --collect-data sv_ttk --icon ./ico/csmicon4.ico --name ContactSheetMaker
